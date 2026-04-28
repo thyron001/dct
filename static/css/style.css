@@ -351,7 +351,7 @@ input[type="range"]::-moz-range-thumb {
 
   .results-panel {
     grid-area: results;
-    display: grid;
+    display: grid !important;
     grid-template-rows: auto 1fr auto;
     grid-template-areas: "title" "imgs" "stats";
     gap: 20px;
