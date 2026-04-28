@@ -35,8 +35,17 @@
   const modalClose     = document.getElementById("modalClose");
   const btnModalDl     = document.getElementById("btnModalDownload");
 
-  let currentFile = null;
+  let currentFile   = null;
   let modalFilename = "imagen.png";
+  let cameraStream  = null;
+  let facingMode    = "environment";
+
+  // ── Camera refs ──
+  const cameraOverlay = document.getElementById("cameraOverlay");
+  const cameraClose   = document.getElementById("cameraClose");
+  const cameraVideo   = document.getElementById("cameraVideo");
+  const btnShutter    = document.getElementById("btnShutter");
+  const btnFlip       = document.getElementById("btnFlip");
 
   // ── Slider track fill ──
   function updateSlider(val) {
@@ -61,9 +70,68 @@
     updateSlider(v);
   });
 
-  // ── File capture ──
-  btnCamera.addEventListener("click",  () => inputCamera.click());
+  // ── Camera ──
+  btnCamera.addEventListener("click", openCamera);
   btnGallery.addEventListener("click", () => inputGallery.click());
+
+  async function openCamera() {
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+      inputCamera.click();
+      return;
+    }
+    try {
+      cameraStream = await navigator.mediaDevices.getUserMedia({
+        video: { facingMode, width: { ideal: 1280 }, height: { ideal: 960 } },
+        audio: false,
+      });
+      cameraVideo.srcObject = cameraStream;
+      cameraOverlay.style.display = "flex";
+    } catch (err) {
+      // Permission denied or no camera — fall back to file input
+      inputCamera.click();
+    }
+  }
+
+  function stopCamera() {
+    if (cameraStream) {
+      cameraStream.getTracks().forEach(t => t.stop());
+      cameraStream = null;
+    }
+    cameraVideo.srcObject = null;
+    cameraOverlay.style.display = "none";
+  }
+
+  cameraClose.addEventListener("click", stopCamera);
+  cameraOverlay.addEventListener("click", (e) => { if (e.target === cameraOverlay) stopCamera(); });
+
+  btnShutter.addEventListener("click", () => {
+    const canvas = document.createElement("canvas");
+    canvas.width  = cameraVideo.videoWidth;
+    canvas.height = cameraVideo.videoHeight;
+    canvas.getContext("2d").drawImage(cameraVideo, 0, 0);
+    stopCamera();
+    canvas.toBlob((blob) => {
+      handleFile(new File([blob], "foto.jpg", { type: "image/jpeg" }));
+    }, "image/jpeg", 0.92);
+  });
+
+  btnFlip.addEventListener("click", async () => {
+    facingMode = facingMode === "environment" ? "user" : "environment";
+    if (cameraStream) {
+      cameraStream.getTracks().forEach(t => t.stop());
+      cameraStream = null;
+    }
+    try {
+      cameraStream = await navigator.mediaDevices.getUserMedia({
+        video: { facingMode, width: { ideal: 1280 }, height: { ideal: 960 } },
+        audio: false,
+      });
+      cameraVideo.srcObject = cameraStream;
+    } catch {
+      facingMode = facingMode === "environment" ? "user" : "environment";
+      stopCamera();
+    }
+  });
 
   function handleFile(file) {
     if (!file) return;
