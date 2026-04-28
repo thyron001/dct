@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>DCT Image Compressor</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<div class="bg-wrap">
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+  <div class="blob blob-4"></div>
+</div>
+
+<div class="content">
+
+  <!-- Header -->
+  <header class="glass header">
+    <div class="header-logo">
+      <div class="header-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round">
+          <rect x="2" y="2" width="9" height="9" rx="2"/>
+          <rect x="13" y="2" width="9" height="9" rx="2"/>
+          <rect x="2" y="13" width="9" height="9" rx="2"/>
+          <rect x="13" y="13" width="9" height="9" rx="2" opacity="0.4"/>
+        </svg>
+      </div>
+      <h1>DCT Compressor</h1>
+    </div>
+  </header>
+
+  <!-- Error bar -->
+  <div class="error-bar" id="errorBar" style="display:none;"></div>
+
+  <!-- Capture panel -->
+  <section class="glass capture-panel">
+    <p class="capture-title">Imagen de entrada</p>
+    <div class="capture-btns">
+      <button class="btn-capture" id="btnCamera">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+          <circle cx="12" cy="13" r="4"/>
+        </svg>
+        Tomar foto
+      </button>
+      <button class="btn-capture" id="btnGallery">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="3" width="18" height="18" rx="3"/>
+          <circle cx="8.5" cy="8.5" r="1.5"/>
+          <polyline points="21 15 16 10 5 21"/>
+        </svg>
+        Cargar imagen
+      </button>
+    </div>
+    <input type="file" id="inputCamera"  accept="image/*" capture="environment" style="display:none;">
+    <input type="file" id="inputGallery" accept="image/*" style="display:none;">
+
+    <div class="image-preview" id="imagePreview" style="display:none;">
+      <img id="previewThumb" src="" alt="preview">
+      <div class="preview-info">
+        <div class="preview-name" id="previewName">imagen</div>
+        <div class="preview-dim"  id="previewDim"></div>
+      </div>
+      <span class="preview-badge">Cargada</span>
+    </div>
+  </section>
+
+  <!-- Control panel -->
+  <section class="glass control-panel">
+    <div class="control-label">
+      <span>Coeficientes DCT (de 64)</span>
+      <div class="coef-badge">
+        <strong id="coefVal">8</strong>
+        <span class="coef-pct" id="coefPct">12.5%</span>
+      </div>
+    </div>
+
+    <div class="slider-row">
+      <div class="slider-wrap">
+        <input type="range" id="slider" min="1" max="64" value="8">
+      </div>
+      <input class="num-input" type="number" id="numInput" min="1" max="64" value="8">
+    </div>
+
+    <p class="control-hint" id="controlHint">
+      Se conservan los primeros 8 coeficientes del recorrido zig-zag
+      de cada bloque 8×8 — el resto se anula antes de la IDCT.
+    </p>
+
+    <button class="btn-compress" id="btnCompress" disabled>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="8 3 4 7 8 11"/><line x1="4" y1="7" x2="20" y2="7"/>
+        <polyline points="16 13 20 17 16 21"/><line x1="20" y1="17" x2="4" y2="17"/>
+      </svg>
+      Comprimir
+    </button>
+  </section>
+
+  <!-- Results panel -->
+  <section class="glass results-panel" id="resultsPanel" style="display:none;">
+    <p class="results-title">Resultados</p>
+
+    <div class="thumbs-row">
+      <div class="thumb-card" data-key="orig">
+        <img id="imgOrig" src="" alt="Original">
+        <div class="thumb-label">Original</div>
+        <div class="thumb-tap">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/>
+            <line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/>
+          </svg>
+        </div>
+      </div>
+      <div class="thumb-card" data-key="gray">
+        <img id="imgGray" src="" alt="Escala de grises">
+        <div class="thumb-label">Escala de grises</div>
+        <div class="thumb-tap">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/>
+            <line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/>
+          </svg>
+        </div>
+      </div>
+      <div class="thumb-card" data-key="comp">
+        <img id="imgComp" src="" alt="Comprimida">
+        <div class="thumb-label">Comprimida</div>
+        <div class="thumb-tap">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/>
+            <line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <div class="stats-row">
+      <div class="psnr-block">
+        <div class="psnr-value"><span id="psnrVal">—</span><span class="psnr-unit"> dB</span></div>
+        <div class="psnr-label">PSNR</div>
+        <div class="psnr-quality" id="psnrQuality"></div>
+      </div>
+
+      <div class="metrics-grid">
+        <div class="metric">
+          <div class="metric-val"><span id="mCoef">—</span><span style="font-size:13px;opacity:.5">/64</span></div>
+          <div class="metric-key">Coeficientes</div>
+        </div>
+        <div class="metric">
+          <div class="metric-val"><span id="mRatio">—</span><span style="font-size:13px;opacity:.5">%</span></div>
+          <div class="metric-key">Ratio teórico</div>
+        </div>
+        <div class="metric">
+          <div class="metric-val" style="font-size:15px;" id="mDim">—</div>
+          <div class="metric-key">Dimensiones (px)</div>
+        </div>
+        <div class="metric">
+          <div class="metric-val" style="font-size:15px;" id="mPx">—<span style="font-size:13px;opacity:.5">K</span></div>
+          <div class="metric-key">Píxeles totales</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div><!-- .content -->
+
+<!-- Loading spinner -->
+<div class="spinner-overlay" id="spinnerOverlay" style="display:none;">
+  <div class="spinner-glass">
+    <div class="spinner"></div>
+    <div class="spinner-text">Procesando DCT…</div>
+  </div>
+</div>
+
+<!-- Image modal -->
+<div class="modal-overlay" id="modalOverlay" style="display:none;">
+  <div class="modal-inner" id="modalInner">
+    <div class="modal-header">
+      <span id="modalLabel">Imagen</span>
+      <button class="btn-close" id="modalClose">×</button>
+    </div>
+    <img class="modal-img" id="modalImg" src="" alt="">
+    <div class="modal-footer">
+      <button class="btn-modal-download" id="btnModalDownload">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+          <polyline points="7 10 12 15 17 10"/>
+          <line x1="12" y1="15" x2="12" y2="3"/>
+        </svg>
+        Descargar
+      </button>
+    </div>
+  </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
