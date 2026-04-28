@@ -6,12 +6,12 @@ services:
     image: dct-image-compressor:latest
     container_name: dct-compressor
     ports:
-      - "8000:8000"
+      - "5000:5000"
     environment:
-      - PORT=8000
+      - PORT=5000
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8000/"]
+      test: ["CMD", "curl", "-f", "http://localhost:5000/"]
       interval: 30s
       timeout: 10s
       retries: 3
