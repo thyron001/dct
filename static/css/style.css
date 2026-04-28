@@ -354,7 +354,7 @@ input[type="range"]::-moz-range-thumb {
     display: grid;
     grid-template-rows: auto 1fr auto;
     grid-template-areas: "title" "imgs" "stats";
-    gap: 12px;
+    gap: 20px;
     overflow: hidden;
     padding: 18px;
   }
