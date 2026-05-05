@@ -78,13 +78,14 @@ def compress_dct(img_gray: np.ndarray, num_coef: int) -> np.ndarray:
     return np.clip(np.round(cropped), 0, 255).astype(np.uint8)
 
 
-def psnr(original: np.ndarray, reconstructed: np.ndarray) -> float:
+def psnr(original: np.ndarray, reconstructed: np.ndarray, bits: int = 8) -> float:
     mse = float(
         np.mean((original.astype(np.float64) - reconstructed.astype(np.float64)) ** 2)
     )
     if mse < 1e-10:
         return float("inf")
-    return float(20 * np.log10(255.0 / math.sqrt(mse)))
+    max_val = (2 ** bits - 1) ** 2
+    return float(10 * np.log10(max_val / mse))
 
 
 def _to_b64_png(arr: np.ndarray) -> str:
