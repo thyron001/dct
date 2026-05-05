@@ -124,6 +124,14 @@ def process():
 
     p = psnr(img_gray, img_comp)
 
+    buf_orig = io.BytesIO()
+    Image.fromarray(img_gray).save(buf_orig, format="PNG")
+    size_original = buf_orig.tell()
+
+    buf_comp = io.BytesIO()
+    Image.fromarray(img_comp).save(buf_comp, format="PNG")
+    size_comprimida = buf_comp.tell()
+
     return jsonify(
         {
             "imagen_original":   _to_b64_png(np.array(img_rgb)),
@@ -135,6 +143,8 @@ def process():
             "width":             width,
             "height":            height,
             "tasa_compresion":   round(num_coef / 64, 4),
+            "size_original":     size_original,
+            "size_comprimida":   size_comprimida,
         }
     )
 

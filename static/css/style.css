@@ -196,6 +196,33 @@ input[type="range"]::-moz-range-thumb {
 .metric-val { font-size: 20px; font-weight: 700; }
 .metric-key { font-size: 11px; color: rgba(255,255,255,0.4); margin-top: 3px; }
 
+/* ── Size block ── */
+.size-block {
+  padding: 14px 16px;
+  border-radius: 14px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
+}
+.size-label {
+  font-size: 11px; font-weight: 600; letter-spacing: 0.5px;
+  color: rgba(255,255,255,0.4); text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.size-row {
+  display: flex; align-items: center; gap: 10px;
+}
+.size-item { flex: 1; text-align: center; }
+.size-val { font-size: 18px; font-weight: 700; color: #fff; }
+.size-key { font-size: 11px; color: rgba(255,255,255,0.4); margin-top: 2px; }
+.size-arrow { opacity: 0.4; flex-shrink: 0; }
+.size-savings {
+  font-size: 12px; font-weight: 700;
+  padding: 4px 10px; border-radius: 20px;
+  background: rgba(34,211,238,0.12); color: #22D3EE;
+  border: 1px solid rgba(34,211,238,0.2);
+  white-space: nowrap;
+}
+
 /* ── Camera modal ── */
 .camera-overlay {
   position: fixed; inset: 0; z-index: 110;
@@ -394,6 +421,8 @@ input[type="range"]::-moz-range-thumb {
   .metrics-grid { margin-bottom: 0; grid-template-columns: repeat(4, 1fr); }
   .metric { padding: 12px 14px; }
   .metric-val { font-size: 18px; }
+  .size-block { grid-column: 1 / -1; }
+  .size-val { font-size: 16px; }
 
   /* Tighten left panels */
   .capture-btns { gap: 8px; }

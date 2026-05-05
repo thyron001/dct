@@ -28,6 +28,9 @@
   const mRatio         = document.getElementById("mRatio");
   const mDim           = document.getElementById("mDim");
   const mPx            = document.getElementById("mPx");
+  const mSizeOrig      = document.getElementById("mSizeOrig");
+  const mSizeComp      = document.getElementById("mSizeComp");
+  const mSizeSavings   = document.getElementById("mSizeSavings");
   const modalOverlay   = document.getElementById("modalOverlay");
   const modalInner     = document.getElementById("modalInner");
   const modalImg       = document.getElementById("modalImg");
@@ -191,6 +194,21 @@
       mDim.textContent   = data.width + "×" + data.height;
       mPx.textContent    = ((data.width * data.height) / 1000).toFixed(1);
 
+      mSizeOrig.textContent = fmtBytes(data.size_original);
+      mSizeComp.textContent = fmtBytes(data.size_comprimida);
+      const saved = ((1 - data.size_comprimida / data.size_original) * 100);
+      if (saved > 0) {
+        mSizeSavings.textContent = "−" + saved.toFixed(0) + "%";
+        mSizeSavings.style.color = "#22D3EE";
+        mSizeSavings.style.borderColor = "rgba(34,211,238,0.2)";
+        mSizeSavings.style.background  = "rgba(34,211,238,0.12)";
+      } else {
+        mSizeSavings.textContent = "+" + Math.abs(saved).toFixed(0) + "%";
+        mSizeSavings.style.color = "#f87171";
+        mSizeSavings.style.borderColor = "rgba(248,113,113,0.2)";
+        mSizeSavings.style.background  = "rgba(248,113,113,0.12)";
+      }
+
       resultsPanel.style.display = "block";
       resultsPanel.scrollIntoView && resultsPanel.scrollIntoView({ behavior: "smooth", block: "start" });
     } catch (err) {
@@ -241,6 +259,12 @@
   function showError(msg) {
     errorBar.textContent   = msg;
     errorBar.style.display = msg ? "block" : "none";
+  }
+
+  function fmtBytes(b) {
+    if (b >= 1024 * 1024) return (b / (1024 * 1024)).toFixed(2) + " MB";
+    if (b >= 1024)        return (b / 1024).toFixed(1) + " KB";
+    return b + " B";
   }
 
   function psnrInfo(val) {
