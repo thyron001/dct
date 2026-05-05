@@ -16,7 +16,7 @@ app.config["MAX_CONTENT_LENGTH"] = 16 * 1024 * 1024
 # Dimensión máxima permitida (ancho o alto) antes de redimensionar
 MAX_DIM = 720
 
-
+# Freddy
 def _zigzag_indices(n: int = 8):
     """
     Genera el orden de recorrido en zigzag para un bloque n×n.
@@ -63,7 +63,7 @@ def _zigzag_indices(n: int = 8):
 # Tabla de índices zigzag precalculada para bloques 8×8
 ZZ = _zigzag_indices()
 
-
+# Tyrone
 def _resize(img: Image.Image) -> Image.Image:
     """
     Redimensiona la imagen si supera MAX_DIM en alguno de sus lados,
@@ -76,7 +76,7 @@ def _resize(img: Image.Image) -> Image.Image:
         img = img.resize((round(w * scale), round(h * scale)), Image.LANCZOS)
     return img
 
-
+#Freddy
 def compress_dct(img_gray: np.ndarray, num_coef: int) -> np.ndarray:
     """
     Comprime una imagen en escala de grises usando la Transformada Discreta
@@ -119,7 +119,7 @@ def compress_dct(img_gray: np.ndarray, num_coef: int) -> np.ndarray:
     cropped = result[:h, :w]
     return np.clip(np.round(cropped), 0, 255).astype(np.uint8)
 
-
+# Tyrone 
 def psnr(original: np.ndarray, reconstructed: np.ndarray, bits: int = 8) -> float:
     """
     Calcula el PSNR (Peak Signal-to-Noise Ratio) entre la imagen original
@@ -159,7 +159,7 @@ def index():
     """Sirve la página principal de la aplicación."""
     return render_template("index.html")
 
-
+# Tyrone
 @app.route("/process", methods=["POST"])
 def process():
     """
