@@ -25,9 +25,7 @@
   const psnrVal        = document.getElementById("psnrVal");
   const psnrQuality    = document.getElementById("psnrQuality");
   const mCoef          = document.getElementById("mCoef");
-  const mRatio         = document.getElementById("mRatio");
   const mDim           = document.getElementById("mDim");
-  const mPx            = document.getElementById("mPx");
   const mSizeOrig      = document.getElementById("mSizeOrig");
   const mSizeComp      = document.getElementById("mSizeComp");
   const mSizeSavings   = document.getElementById("mSizeSavings");
@@ -189,10 +187,8 @@
       psnrQuality.textContent = q.label;
       psnrQuality.style.color = q.color;
 
-      mCoef.textContent  = data.num_coef;
-      mRatio.textContent = (data.tasa_compresion * 100).toFixed(0);
-      mDim.textContent   = data.width + "×" + data.height;
-      mPx.textContent    = ((data.width * data.height) / 1000).toFixed(1);
+      mCoef.textContent = data.num_coef;
+      mDim.textContent  = data.width + "×" + data.height;
 
       mSizeOrig.textContent = fmtBytes(data.size_original);
       mSizeComp.textContent = fmtBytes(data.size_comprimida);
