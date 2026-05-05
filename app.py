@@ -102,7 +102,7 @@ def compress_dct(img_gray: np.ndarray, num_coef: int) -> np.ndarray:
         for bj in range(0, pw, 8):
             block = padded[bi : bi + 8, bj : bj + 8]  # Extraer bloque actual
 
-            # Aplicar DCT 2D separable: primero por filas, luego por columnas
+            # Aplicar DCT 2D separable: primero por columnas, luego por filas
             coefs = dct(dct(block, norm="ortho", axis=0), norm="ortho", axis=1)
 
             # Crear máscara vacía y copiar solo los num_coef primeros coeficientes zigzag
@@ -158,6 +158,7 @@ def _to_b64_png(arr: np.ndarray) -> str:
 def index():
     """Sirve la página principal de la aplicación."""
     return render_template("index.html")
+
 
 # Tyrone
 @app.route("/process", methods=["POST"])
