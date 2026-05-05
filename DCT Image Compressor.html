@@ -7,7 +7,7 @@
   <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
   <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
   <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
-  
+
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -19,21 +19,8 @@
       overflow-x: hidden;
     }
 
-    /* ── Animated background ── */
-    .bg-wrap {
-      position: fixed;
-      inset: 0;
-      z-index: 0;
-      overflow: hidden;
-      pointer-events: none;
-    }
-    .blob {
-      position: absolute;
-      border-radius: 50%;
-      filter: blur(90px);
-      opacity: 0.5;
-      will-change: transform;
-    }
+    .bg-wrap { position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
+    .blob { position: absolute; border-radius: 50%; filter: blur(90px); opacity: 0.5; will-change: transform; }
     .blob-1 { width: 650px; height: 650px; background: radial-gradient(circle, #4F46E5 0%, #3730a3 100%); top: -220px; left: -200px; animation: bf1 30s ease-in-out infinite; }
     .blob-2 { width: 520px; height: 520px; background: radial-gradient(circle, #8B5CF6 0%, #7c3aed 100%); top: 35%; right: -180px; animation: bf2 36s ease-in-out infinite; }
     .blob-3 { width: 480px; height: 480px; background: radial-gradient(circle, #06B6D4 0%, #0891b2 100%); bottom: 5%; left: 15%; animation: bf3 40s ease-in-out infinite; }
@@ -43,44 +30,24 @@
     @keyframes bf2 { 0%,100%{transform:translate(0,0) scale(1)} 40%{transform:translate(-45px,35px) scale(1.1)} 80%{transform:translate(35px,-25px) scale(0.93)} }
     @keyframes bf3 { 0%,100%{transform:translate(0,0) scale(1)} 50%{transform:translate(35px,-45px) scale(1.06)} }
 
-    /* ── Layout ── */
     .content {
-      position: relative;
-      z-index: 1;
-      max-width: 480px;
-      margin: 0 auto;
+      position: relative; z-index: 1;
+      max-width: 480px; margin: 0 auto;
       padding: 20px 16px 48px;
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
+      display: flex; flex-direction: column; gap: 14px;
     }
 
-    /* ── Glass panel ── */
     .glass {
       background: rgba(255,255,255,0.09);
       backdrop-filter: blur(28px) saturate(180%);
       -webkit-backdrop-filter: blur(28px) saturate(180%);
       border: 1px solid rgba(255,255,255,0.15);
       border-radius: 24px;
-      box-shadow:
-        0 12px 40px rgba(0,0,0,0.45),
-        inset 0 1px 0 rgba(255,255,255,0.22);
-    }
-    .glass-sm {
-      background: rgba(255,255,255,0.07);
-      backdrop-filter: blur(16px) saturate(160%);
-      -webkit-backdrop-filter: blur(16px) saturate(160%);
-      border: 1px solid rgba(255,255,255,0.12);
-      border-radius: 16px;
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.15);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.22);
     }
 
-    /* ── Header ── */
     .header { padding: 24px 24px 20px; text-align: center; }
-    .header-logo {
-      display: flex; align-items: center; justify-content: center; gap: 10px;
-      margin-bottom: 6px;
-    }
+    .header-logo { display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 6px; }
     .header-icon {
       width: 42px; height: 42px;
       background: linear-gradient(135deg, #22D3EE, #6366F1);
@@ -89,36 +56,26 @@
       box-shadow: 0 4px 16px rgba(34,211,238,0.35);
     }
     .header h1 { font-size: 22px; font-weight: 700; letter-spacing: -0.5px; }
-    .header p { font-size: 12px; color: rgba(255,255,255,0.5); margin-top: 4px; letter-spacing: 0.3px; }
 
-    /* ── Capture panel ── */
     .capture-panel { padding: 20px; }
     .capture-title { font-size: 11px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: rgba(255,255,255,0.45); margin-bottom: 14px; }
     .capture-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
     .btn-capture {
       display: flex; flex-direction: column; align-items: center; justify-content: center;
       gap: 8px; padding: 18px 12px;
-      background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.13);
-      border-radius: 16px;
-      color: rgba(255,255,255,0.85);
-      font-size: 13px; font-weight: 600;
-      cursor: pointer;
-      transition: all 0.2s;
-      font-family: inherit;
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.13);
+      border-radius: 16px; color: rgba(255,255,255,0.85);
+      font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s;
+      font-family: inherit; box-shadow: inset 0 1px 0 rgba(255,255,255,0.12);
     }
     .btn-capture:hover { background: rgba(255,255,255,0.14); border-color: rgba(255,255,255,0.22); transform: translateY(-1px); }
     .btn-capture:active { transform: translateY(0); }
     .btn-capture svg { opacity: 0.8; }
 
     .image-preview {
-      margin-top: 14px;
-      display: flex; align-items: center; gap: 12px;
-      padding: 12px;
-      border-radius: 14px;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.08);
+      margin-top: 14px; display: flex; align-items: center; gap: 12px;
+      padding: 12px; border-radius: 14px;
+      background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08);
     }
     .image-preview img { width: 52px; height: 52px; object-fit: cover; border-radius: 10px; }
     .preview-info { flex: 1; min-width: 0; }
@@ -127,338 +84,178 @@
     .preview-badge {
       font-size: 10px; font-weight: 600; letter-spacing: 0.5px;
       padding: 3px 8px; border-radius: 20px;
-      background: rgba(34,211,238,0.15);
-      color: #22D3EE;
-      border: 1px solid rgba(34,211,238,0.25);
+      background: rgba(34,211,238,0.15); color: #22D3EE; border: 1px solid rgba(34,211,238,0.25);
     }
 
-    /* ── Control panel ── */
     .control-panel { padding: 22px 20px; }
-    .control-label {
-      display: flex; align-items: baseline; justify-content: space-between;
-      margin-bottom: 16px;
-    }
+    .control-label { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 16px; }
     .control-label span { font-size: 14px; font-weight: 600; }
-    .coef-badge {
-      font-size: 13px; font-weight: 700; color: #22D3EE;
-      display: flex; align-items: center; gap: 6px;
-    }
+    .coef-badge { font-size: 13px; font-weight: 700; color: #22D3EE; display: flex; align-items: center; gap: 6px; }
     .coef-pct { font-size: 11px; color: rgba(34,211,238,0.7); font-weight: 600; }
 
     .slider-row { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
     .slider-wrap { flex: 1; position: relative; }
 
-    input[type="range"] {
-      -webkit-appearance: none;
-      width: 100%; height: 6px;
-      border-radius: 3px;
-      outline: none;
-      cursor: pointer;
-    }
+    input[type="range"] { -webkit-appearance: none; width: 100%; height: 6px; border-radius: 3px; outline: none; cursor: pointer; }
     input[type="range"]::-webkit-slider-thumb {
-      -webkit-appearance: none;
-      width: 26px; height: 26px;
-      border-radius: 50%;
-      background: #fff;
-      box-shadow: 0 0 0 3px rgba(34,211,238,0.4), 0 2px 8px rgba(0,0,0,0.4);
-      cursor: pointer;
-      transition: box-shadow 0.15s;
+      -webkit-appearance: none; width: 26px; height: 26px; border-radius: 50%; background: #fff;
+      box-shadow: 0 0 0 3px rgba(34,211,238,0.4), 0 2px 8px rgba(0,0,0,0.4); cursor: pointer; transition: box-shadow 0.15s;
     }
-    input[type="range"]::-webkit-slider-thumb:hover {
-      box-shadow: 0 0 0 5px rgba(34,211,238,0.3), 0 2px 8px rgba(0,0,0,0.4);
-    }
-    input[type="range"]::-moz-range-thumb {
-      width: 26px; height: 26px; border-radius: 50%; background: #fff;
-      box-shadow: 0 0 0 3px rgba(34,211,238,0.4); cursor: pointer; border: none;
-    }
+    input[type="range"]::-webkit-slider-thumb:hover { box-shadow: 0 0 0 5px rgba(34,211,238,0.3), 0 2px 8px rgba(0,0,0,0.4); }
+    input[type="range"]::-moz-range-thumb { width: 26px; height: 26px; border-radius: 50%; background: #fff; box-shadow: 0 0 0 3px rgba(34,211,238,0.4); cursor: pointer; border: none; }
 
     .num-input {
-      width: 64px; height: 42px;
-      background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.15);
-      border-radius: 12px;
-      color: #fff;
-      font-size: 16px; font-weight: 700;
-      text-align: center;
-      font-family: inherit;
-      outline: none;
-      -moz-appearance: textfield;
+      width: 64px; height: 42px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 12px; color: #fff; font-size: 16px; font-weight: 700; text-align: center;
+      font-family: inherit; outline: none; -moz-appearance: textfield;
     }
-    .num-input::-webkit-inner-spin-button,
-    .num-input::-webkit-outer-spin-button { -webkit-appearance: none; }
+    .num-input::-webkit-inner-spin-button, .num-input::-webkit-outer-spin-button { -webkit-appearance: none; }
     .num-input:focus { border-color: rgba(34,211,238,0.5); }
 
-    .control-hint {
-      font-size: 11px; color: rgba(255,255,255,0.38);
-      line-height: 1.5; margin-bottom: 18px;
-    }
+    .control-hint { font-size: 11px; color: rgba(255,255,255,0.38); line-height: 1.5; margin-bottom: 18px; }
 
     .btn-compress {
-      width: 100%; height: 54px;
-      display: flex; align-items: center; justify-content: center; gap: 10px;
-      background: linear-gradient(135deg, #22D3EE, #06B6D4);
-      border: none; border-radius: 16px;
-      color: #001a2e; font-size: 15px; font-weight: 700;
-      cursor: pointer;
-      font-family: inherit;
+      width: 100%; height: 54px; display: flex; align-items: center; justify-content: center; gap: 10px;
+      background: linear-gradient(135deg, #22D3EE, #06B6D4); border: none; border-radius: 16px;
+      color: #001a2e; font-size: 15px; font-weight: 700; cursor: pointer; font-family: inherit;
       box-shadow: 0 6px 24px rgba(34,211,238,0.35), inset 0 1px 0 rgba(255,255,255,0.25);
-      transition: all 0.2s;
-      letter-spacing: 0.2px;
+      transition: all 0.2s; letter-spacing: 0.2px;
     }
     .btn-compress:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 10px 32px rgba(34,211,238,0.45), inset 0 1px 0 rgba(255,255,255,0.25); }
     .btn-compress:active:not(:disabled) { transform: translateY(0); }
     .btn-compress:disabled { opacity: 0.35; cursor: not-allowed; }
 
-    /* ── Results panel ── */
     .results-panel { padding: 22px 20px; }
     .results-title { font-size: 11px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: rgba(255,255,255,0.45); margin-bottom: 16px; }
 
     .thumbs-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 16px; }
     .thumb-card {
-      border-radius: 16px; overflow: hidden;
-      position: relative; cursor: pointer;
-      background: rgba(0,0,0,0.3);
-      border: 1px solid rgba(255,255,255,0.1);
-      transition: transform 0.2s;
+      border-radius: 16px; overflow: hidden; position: relative; cursor: pointer;
+      background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1); transition: transform 0.2s;
     }
     .thumb-card:hover { transform: scale(1.02); }
     .thumb-card img { width: 100%; aspect-ratio: 1; object-fit: cover; display: block; }
     .thumb-label {
-      position: absolute; bottom: 0; left: 0; right: 0;
-      padding: 6px 10px;
+      position: absolute; bottom: 0; left: 0; right: 0; padding: 6px 10px;
       background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
       font-size: 11px; font-weight: 600; letter-spacing: 0.3px;
     }
     .thumb-tap {
-      position: absolute; top: 8px; right: 8px;
-      width: 24px; height: 24px;
-      background: rgba(0,0,0,0.4);
-      backdrop-filter: blur(8px);
-      border-radius: 50%;
+      position: absolute; top: 8px; right: 8px; width: 24px; height: 24px;
+      background: rgba(0,0,0,0.4); backdrop-filter: blur(8px); border-radius: 50%;
       display: flex; align-items: center; justify-content: center;
     }
 
-    /* PSNR block */
+    .stats-row { display: contents; }
+
     .psnr-block {
-      padding: 20px;
-      border-radius: 18px;
-      background: rgba(34,211,238,0.06);
-      border: 1px solid rgba(34,211,238,0.18);
-      text-align: center;
-      margin-bottom: 12px;
-      box-shadow: inset 0 1px 0 rgba(34,211,238,0.1);
+      padding: 20px; border-radius: 18px;
+      background: rgba(34,211,238,0.06); border: 1px solid rgba(34,211,238,0.18);
+      text-align: center; margin-bottom: 12px; box-shadow: inset 0 1px 0 rgba(34,211,238,0.1);
     }
-    .psnr-value {
-      font-size: 42px; font-weight: 700;
-      color: #22D3EE;
-      letter-spacing: -1px;
-      line-height: 1;
-      text-shadow: 0 0 30px rgba(34,211,238,0.4);
-    }
+    .psnr-value { font-size: 42px; font-weight: 700; color: #22D3EE; letter-spacing: -1px; line-height: 1; text-shadow: 0 0 30px rgba(34,211,238,0.4); }
     .psnr-unit { font-size: 18px; font-weight: 400; opacity: 0.7; }
     .psnr-label { font-size: 11px; color: rgba(255,255,255,0.4); margin-top: 6px; letter-spacing: 1px; text-transform: uppercase; }
     .psnr-quality { font-size: 12px; font-weight: 600; margin-top: 8px; }
 
-    /* Metrics grid */
     .metrics-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
-    .metric {
-      padding: 14px;
-      border-radius: 14px;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.08);
-    }
+    .metric { padding: 14px; border-radius: 14px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); }
     .metric-val { font-size: 20px; font-weight: 700; }
     .metric-key { font-size: 11px; color: rgba(255,255,255,0.4); margin-top: 3px; }
 
-    .btn-download {
-      width: 100%; height: 52px;
-      display: flex; align-items: center; justify-content: center; gap: 10px;
-      background: rgba(255,255,255,0.07);
-      border: 1px solid rgba(255,255,255,0.2);
-      border-radius: 16px;
-      color: rgba(255,255,255,0.9); font-size: 14px; font-weight: 600;
-      cursor: pointer; font-family: inherit;
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
-      transition: all 0.2s;
+    .size-savings {
+      font-size: 12px; font-weight: 700; padding: 3px 8px; border-radius: 20px;
+      background: rgba(34,211,238,0.12); color: #22D3EE; border: 1px solid rgba(34,211,238,0.2);
+      white-space: nowrap; display: inline-block; margin-top: 6px;
     }
-    .btn-download:hover { background: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.28); }
 
-    /* ── Modal ── */
     .modal-overlay {
-      position: fixed; inset: 0; z-index: 100;
-      background: rgba(6,1,18,0.85);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      display: flex; align-items: center; justify-content: center;
-      padding: 24px;
+      position: fixed; inset: 0; z-index: 100; background: rgba(6,1,18,0.85);
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      display: flex; align-items: center; justify-content: center; padding: 24px;
       animation: fadeIn 0.2s ease;
     }
     @keyframes fadeIn { from{opacity:0} to{opacity:1} }
     .modal-inner {
-      width: 100%; max-width: 440px;
-      border-radius: 28px;
-      overflow: hidden;
-      background: rgba(255,255,255,0.1);
-      border: 1px solid rgba(255,255,255,0.18);
+      width: 100%; max-width: 440px; border-radius: 28px; overflow: hidden;
+      background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.18);
       box-shadow: 0 24px 80px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.22);
       animation: slideUp 0.25s ease;
     }
     @keyframes slideUp { from{transform:translateY(20px);opacity:0} to{transform:translateY(0);opacity:1} }
-    .modal-header {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 16px 20px;
-      border-bottom: 1px solid rgba(255,255,255,0.1);
-    }
+    .modal-header { display: flex; align-items: center; justify-content: space-between; padding: 16px 20px; border-bottom: 1px solid rgba(255,255,255,0.1); }
     .modal-header span { font-size: 14px; font-weight: 600; }
     .btn-close {
-      width: 30px; height: 30px; border-radius: 50%;
-      background: rgba(255,255,255,0.12); border: none;
+      width: 30px; height: 30px; border-radius: 50%; background: rgba(255,255,255,0.12); border: none;
       color: #fff; cursor: pointer; font-size: 18px; line-height: 1;
-      display: flex; align-items: center; justify-content: center;
-      transition: background 0.15s;
+      display: flex; align-items: center; justify-content: center; transition: background 0.15s;
     }
     .btn-close:hover { background: rgba(255,255,255,0.2); }
     .modal-img { width: 100%; display: block; max-height: 58vh; object-fit: contain; background: #000; }
-    .modal-footer {
-      padding: 14px 20px;
-      border-top: 1px solid rgba(255,255,255,0.1);
-    }
+    .modal-footer { padding: 14px 20px; border-top: 1px solid rgba(255,255,255,0.1); }
     .btn-modal-download {
-      width: 100%; height: 48px;
-      display: flex; align-items: center; justify-content: center; gap: 8px;
-      background: linear-gradient(135deg, #22D3EE, #06B6D4);
-      border: none; border-radius: 14px;
-      color: #001a2e; font-size: 14px; font-weight: 700;
-      cursor: pointer; font-family: inherit;
-      box-shadow: 0 4px 18px rgba(34,211,238,0.3), inset 0 1px 0 rgba(255,255,255,0.25);
-      transition: all 0.2s;
+      width: 100%; height: 48px; display: flex; align-items: center; justify-content: center; gap: 8px;
+      background: linear-gradient(135deg, #22D3EE, #06B6D4); border: none; border-radius: 14px;
+      color: #001a2e; font-size: 14px; font-weight: 700; cursor: pointer; font-family: inherit;
+      box-shadow: 0 4px 18px rgba(34,211,238,0.3), inset 0 1px 0 rgba(255,255,255,0.25); transition: all 0.2s;
     }
     .btn-modal-download:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(34,211,238,0.4); }
 
-    /* ── Spinner ── */
     .spinner-overlay {
-      position: fixed; inset: 0; z-index: 90;
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
-      background: rgba(6,1,18,0.7);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
+      position: fixed; inset: 0; z-index: 90; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; background: rgba(6,1,18,0.7);
+      backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
     }
     .spinner-glass {
-      padding: 32px 40px;
-      border-radius: 24px;
-      background: rgba(255,255,255,0.1);
+      padding: 32px 40px; border-radius: 24px; background: rgba(255,255,255,0.1);
       border: 1px solid rgba(255,255,255,0.18);
       box-shadow: 0 16px 48px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.2);
       display: flex; flex-direction: column; align-items: center; gap: 16px;
     }
-    .spinner {
-      width: 44px; height: 44px;
-      border: 3px solid rgba(34,211,238,0.2);
-      border-top-color: #22D3EE;
-      border-radius: 50%;
-      animation: spin 0.8s linear infinite;
-    }
+    .spinner { width: 44px; height: 44px; border: 3px solid rgba(34,211,238,0.2); border-top-color: #22D3EE; border-radius: 50%; animation: spin 0.8s linear infinite; }
     @keyframes spin { to { transform: rotate(360deg); } }
     .spinner-text { font-size: 14px; font-weight: 600; color: rgba(255,255,255,0.7); }
 
-    /* ── Error ── */
-    .error-bar {
-      padding: 14px 18px;
-      border-radius: 16px;
-      background: rgba(239,68,68,0.12);
-      border: 1px solid rgba(239,68,68,0.25);
-      font-size: 13px; color: #fca5a5;
-    }
+    .error-bar { padding: 14px 18px; border-radius: 16px; background: rgba(239,68,68,0.12); border: 1px solid rgba(239,68,68,0.25); font-size: 13px; color: #fca5a5; }
 
-    /* ── Responsive mobile ── */
     @media (min-width: 500px) and (max-width: 899px) {
       .content { padding: 32px 24px 64px; }
       .header h1 { font-size: 26px; }
     }
 
-    /* ── Desktop layout ── */
     @media (min-width: 900px) {
       body { overflow: hidden; height: 100vh; }
-
       .content {
-        max-width: none;
-        width: 100%;
-        height: 100vh;
-        padding: 14px;
-        display: grid;
-        grid-template-columns: 300px 1fr;
+        max-width: none; width: 100%; height: 100vh; padding: 14px;
+        display: grid; grid-template-columns: 300px 1fr;
         grid-template-rows: auto auto 1fr;
-        grid-template-areas:
-          "header  results"
-          "capture results"
-          "control results";
-        gap: 12px;
-        overflow: hidden;
+        grid-template-areas: "header results" "capture results" "control results";
+        gap: 12px; overflow: hidden;
       }
-
-      /* Left column panels */
-      .header        { grid-area: header;  text-align: left; padding: 18px 20px 14px; }
+      .header        { grid-area: header; text-align: left; padding: 18px 20px 14px; }
       .header-logo   { justify-content: flex-start; }
       .capture-panel { grid-area: capture; }
       .control-panel { grid-area: control; }
-
-      /* Right column: results fills full height */
       .results-panel {
-        grid-area: results;
-        display: grid;
-        grid-template-rows: 1fr auto;
-        grid-template-areas: "imgs" "stats";
-        gap: 12px;
-        overflow: hidden;
-        padding: 18px;
+        grid-area: results; display: grid;
+        grid-template-rows: 1fr auto; grid-template-areas: "imgs" "stats";
+        gap: 12px; overflow: hidden; padding: 18px;
       }
-
       .results-title { display: none; }
-
-      /* 3 images — full height, natural aspect ratio */
-      .thumbs-row {
-        grid-area: imgs;
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
-        gap: 12px;
-        margin-bottom: 0;
-        min-height: 0;
-      }
-      .thumb-card {
-        border-radius: 20px;
-        height: 100%;
-      }
-      .thumb-card img {
-        width: 100%;
-        height: 100%;
-        aspect-ratio: unset;
-        object-fit: contain;
-        background: rgba(0,0,0,0.5);
-      }
+      .thumbs-row { grid-area: imgs; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 0; min-height: 0; }
+      .thumb-card { border-radius: 20px; height: 100%; }
+      .thumb-card img { width: 100%; height: 100%; aspect-ratio: unset; object-fit: contain; background: rgba(0,0,0,0.5); }
       .thumb-label { font-size: 12px; padding: 8px 14px; }
-
-      /* Stats row: PSNR + metrics side by side */
-      .stats-row {
-        grid-area: stats;
-        display: grid;
-        grid-template-columns: 220px 1fr;
-        gap: 12px;
-        align-items: start;
-      }
+      .stats-row { grid-area: stats; display: grid; grid-template-columns: 220px 1fr; gap: 12px; align-items: start; }
       .psnr-block  { margin-bottom: 0; padding: 16px 20px; }
       .psnr-value  { font-size: 36px; }
       .metrics-grid { margin-bottom: 0; grid-template-columns: repeat(4, 1fr); }
       .metric { padding: 12px 14px; }
       .metric-val { font-size: 18px; }
-
-      /* Tighten left panels */
       .capture-btns { gap: 8px; }
       .btn-capture  { padding: 14px 10px; font-size: 12px; }
       .control-panel { padding: 18px; }
     }
-    
-    /* stats-row is a plain div — on mobile keep children stacked */
-    .stats-row { display: contents; }
   </style>
 </head>
 <body>
@@ -472,163 +269,9 @@
 
 <div id="root"></div>
 
-<!-- ══ DCT Math Library ══ -->
-<script>
-(function() {
-
-  // ── Zigzag order for standard JPEG 8×8 block ──
-  function zigzagOrder() {
-    const zz = [];
-    let r = 0, c = 0, goingUp = true;
-    for (let k = 0; k < 64; k++) {
-      zz.push([r, c]);
-      if (goingUp) {
-        if (r === 0 && c < 7)       { c++; goingUp = false; }
-        else if (c === 7)            { r++; goingUp = false; }
-        else                         { r--; c++; }
-      } else {
-        if (c === 0 && r < 7)       { r++; goingUp = true; }
-        else if (r === 7)            { c++; goingUp = true; }
-        else                         { r++; c--; }
-      }
-    }
-    return zz;
-  }
-
-  // ── 1-D DCT-II (ortho norm) ──
-  function dct1d(x) {
-    const N = x.length;
-    const out = new Float64Array(N);
-    for (let k = 0; k < N; k++) {
-      let sum = 0;
-      for (let n = 0; n < N; n++) {
-        sum += x[n] * Math.cos(Math.PI * (2 * n + 1) * k / (2 * N));
-      }
-      out[k] = sum * (k === 0 ? 1 / Math.sqrt(N) : Math.sqrt(2 / N));
-    }
-    return out;
-  }
-
-  // ── 1-D IDCT-II (ortho norm) ──
-  function idct1d(X) {
-    const N = X.length;
-    const out = new Float64Array(N);
-    for (let n = 0; n < N; n++) {
-      let sum = X[0] / Math.sqrt(N);
-      for (let k = 1; k < N; k++) {
-        sum += X[k] * Math.sqrt(2 / N) * Math.cos(Math.PI * (2 * n + 1) * k / (2 * N));
-      }
-      out[n] = sum;
-    }
-    return out;
-  }
-
-  // ── 2-D DCT via separable 1-D (row→col) ──
-  function dct2d(block) {
-    const N = 8;
-    const tmp = [];
-    for (let i = 0; i < N; i++) tmp.push(dct1d(block.slice(i * N, (i + 1) * N)));
-    const out = new Float64Array(64);
-    for (let j = 0; j < N; j++) {
-      const col = new Float64Array(N);
-      for (let i = 0; i < N; i++) col[i] = tmp[i][j];
-      const d = dct1d(col);
-      for (let i = 0; i < N; i++) out[i * N + j] = d[i];
-    }
-    return out;
-  }
-
-  // ── 2-D IDCT ──
-  function idct2d(block) {
-    const N = 8;
-    const tmp = [];
-    for (let i = 0; i < N; i++) tmp.push(idct1d(block.slice(i * N, (i + 1) * N)));
-    const out = new Float64Array(64);
-    for (let j = 0; j < N; j++) {
-      const col = new Float64Array(N);
-      for (let i = 0; i < N; i++) col[i] = tmp[i][j];
-      const d = idct1d(col);
-      for (let i = 0; i < N; i++) out[i * N + j] = d[i];
-    }
-    return out;
-  }
-
-  // ── Main compress function ──
-  function compressDCT(grayData, width, height, numCoef) {
-    const zz = zigzagOrder();
-    const pH = Math.ceil(height / 8) * 8;
-    const pW = Math.ceil(width  / 8) * 8;
-
-    // Padding with border replication
-    const padded = new Float64Array(pH * pW);
-    for (let i = 0; i < pH; i++) {
-      for (let j = 0; j < pW; j++) {
-        const si = Math.min(i, height - 1);
-        const sj = Math.min(j, width  - 1);
-        padded[i * pW + j] = grayData[si * width + sj];
-      }
-    }
-
-    const result = new Float64Array(pH * pW);
-
-    for (let bi = 0; bi < pH; bi += 8) {
-      for (let bj = 0; bj < pW; bj += 8) {
-        // Extract block
-        const block = new Float64Array(64);
-        for (let i = 0; i < 8; i++)
-          for (let j = 0; j < 8; j++)
-            block[i * 8 + j] = padded[(bi + i) * pW + (bj + j)];
-
-        // Forward DCT
-        const dctBlock = dct2d(block);
-
-        // Keep first numCoef zig-zag coefficients
-        const masked = new Float64Array(64);
-        for (let k = 0; k < numCoef; k++) {
-          const [r, c] = zz[k];
-          masked[r * 8 + c] = dctBlock[r * 8 + c];
-        }
-
-        // Inverse DCT
-        const recon = idct2d(masked);
-
-        for (let i = 0; i < 8; i++)
-          for (let j = 0; j < 8; j++)
-            result[(bi + i) * pW + (bj + j)] = recon[i * 8 + j];
-      }
-    }
-
-    // Crop + clip to uint8
-    const out = new Uint8ClampedArray(height * width);
-    for (let i = 0; i < height; i++)
-      for (let j = 0; j < width; j++)
-        out[i * width + j] = Math.max(0, Math.min(255, Math.round(result[i * pW + j])));
-
-    return out;
-  }
-
-  // ── PSNR ──
-  function psnr(original, reconstructed, n) {
-    let mse = 0;
-    for (let i = 0; i < n; i++) {
-      const d = original[i] - reconstructed[i];
-      mse += d * d;
-    }
-    mse /= n;
-    if (mse < 1e-10) return Infinity;
-    return 20 * Math.log10(255 / Math.sqrt(mse));
-  }
-
-  window.DCTLib = { compressDCT, psnr };
-})();
-</script>
-
-<!-- ══ React Application ══ -->
 <script type="text/babel">
 const { useState, useRef, useCallback } = React;
-const MAX_DIM = 720;
 
-// ── SVG Icons ──
 const IconCamera = () => (
   <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
     <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
@@ -672,31 +315,10 @@ const IconDCT = () => (
   </svg>
 );
 
-// ── Helpers ──
-function resizeToCanvas(img) {
-  let w = img.naturalWidth, h = img.naturalHeight;
-  if (w > MAX_DIM || h > MAX_DIM) {
-    const s = Math.min(MAX_DIM / w, MAX_DIM / h);
-    w = Math.round(w * s); h = Math.round(h * s);
-  }
-  const canvas = document.createElement('canvas');
-  canvas.width = w; canvas.height = h;
-  canvas.getContext('2d').drawImage(img, 0, 0, w, h);
-  return canvas;
-}
-
-function grayDataToDataURL(grayData, width, height) {
-  const canvas = document.createElement('canvas');
-  canvas.width = width; canvas.height = height;
-  const ctx = canvas.getContext('2d');
-  const id = ctx.createImageData(width, height);
-  for (let i = 0; i < width * height; i++) {
-    const v = grayData[i];
-    id.data[i*4] = id.data[i*4+1] = id.data[i*4+2] = v;
-    id.data[i*4+3] = 255;
-  }
-  ctx.putImageData(id, 0, 0);
-  return canvas.toDataURL('image/png');
+function fmtBytes(b) {
+  if (b >= 1024 * 1024) return (b / (1024 * 1024)).toFixed(2) + ' MB';
+  if (b >= 1024)        return (b / 1024).toFixed(1) + ' KB';
+  return b + ' B';
 }
 
 function psnrQualityLabel(val) {
@@ -713,14 +335,13 @@ function downloadDataURL(dataUrl, filename) {
   document.body.appendChild(a); a.click(); document.body.removeChild(a);
 }
 
-// ── App ──
 function App() {
-  const [loaded, setLoaded]         = useState(null);
-  const [numCoef, setNumCoef]       = useState(8);
-  const [result, setResult]         = useState(null);
+  const [loaded,     setLoaded]     = useState(null);
+  const [numCoef,    setNumCoef]    = useState(8);
+  const [result,     setResult]     = useState(null);
   const [processing, setProcessing] = useState(false);
-  const [modal, setModal]           = useState(null); // {src, label, filename}
-  const [error, setError]           = useState(null);
+  const [modal,      setModal]      = useState(null);
+  const [error,      setError]      = useState(null);
 
   const cameraRef  = useRef(null);
   const galleryRef = useRef(null);
@@ -732,18 +353,7 @@ function App() {
     reader.onload = (e) => {
       const img = new Image();
       img.onload = () => {
-        const canvas = resizeToCanvas(img);
-        const w = canvas.width, h = canvas.height;
-        const ctx = canvas.getContext('2d');
-        const originalUrl = canvas.toDataURL('image/png');
-        const imageData = ctx.getImageData(0, 0, w, h);
-        const gray = new Float64Array(w * h);
-        for (let i = 0; i < w * h; i++) {
-          gray[i] = 0.299 * imageData.data[i*4] +
-                    0.587 * imageData.data[i*4+1] +
-                    0.114 * imageData.data[i*4+2];
-        }
-        setLoaded({ originalUrl, grayData: gray, width: w, height: h, name: file.name });
+        setLoaded({ previewUrl: e.target.result, width: img.naturalWidth, height: img.naturalHeight, name: file.name, file });
       };
       img.onerror = () => setError('No se pudo leer la imagen.');
       img.src = e.target.result;
@@ -754,16 +364,16 @@ function App() {
   const handleCompress = useCallback(async () => {
     if (!loaded) return;
     setProcessing(true); setError(null);
-    await new Promise(r => setTimeout(r, 60));
     try {
-      const { grayData, width, height } = loaded;
-      const grayUrl = grayDataToDataURL(grayData, width, height);
-      const compressed = window.DCTLib.compressDCT(grayData, width, height, numCoef);
-      const compUrl = grayDataToDataURL(compressed, width, height);
-      const p = window.DCTLib.psnr(grayData, compressed, width * height);
-      setResult({ grayUrl, compUrl, psnr: p, numCoef, width, height });
-    } catch(err) {
-      setError('Error al procesar: ' + err.message);
+      const fd = new FormData();
+      fd.append('image', loaded.file);
+      fd.append('num_coef', numCoef);
+      const resp = await fetch('/process', { method: 'POST', body: fd });
+      const data = await resp.json();
+      if (!resp.ok || data.error) { setError(data.error || 'Error al procesar la imagen.'); return; }
+      setResult(data);
+    } catch (err) {
+      setError('Error de conexión: ' + err.message);
     } finally {
       setProcessing(false);
     }
@@ -773,26 +383,23 @@ function App() {
   const sliderBg  = `linear-gradient(to right, #22D3EE 0%, #22D3EE ${sliderPct}%, rgba(255,255,255,0.18) ${sliderPct}%)`;
 
   const THUMBS = result ? [
-    { key: 'orig', src: loaded.originalUrl,  label: 'Original',    filename: 'original.png'   },
-    { key: 'gray', src: result.grayUrl,      label: 'Escala de grises', filename: 'gris.png'  },
-    { key: 'comp', src: result.compUrl,      label: 'Comprimida',  filename: 'comprimida.png' },
+    { key: 'orig', src: 'data:image/png;base64,' + result.imagen_original,   label: 'Original',         filename: 'original.png'   },
+    { key: 'gray', src: 'data:image/png;base64,' + result.imagen_referencia,  label: 'Escala de grises', filename: 'gris.png'       },
+    { key: 'comp', src: 'data:image/png;base64,' + result.imagen_comprimida,  label: 'Comprimida',       filename: 'comprimida.png' },
   ] : [];
 
   return (
     <div className="content">
 
-      {/* Header */}
       <header className="glass header">
         <div className="header-logo">
           <div className="header-icon"><IconDCT /></div>
           <h1>DCT Compressor</h1>
         </div>
-
       </header>
 
       {error && <div className="error-bar">{error}</div>}
 
-      {/* Capture */}
       <section className="glass capture-panel">
         <p className="capture-title">Imagen de entrada</p>
         <div className="capture-btns">
@@ -808,7 +415,7 @@ function App() {
 
         {loaded && (
           <div className="image-preview">
-            <img src={loaded.originalUrl} alt="preview" />
+            <img src={loaded.previewUrl} alt="preview" />
             <div className="preview-info">
               <div className="preview-name">{loaded.name || 'imagen'}</div>
               <div className="preview-dim">{loaded.width} × {loaded.height} px</div>
@@ -818,7 +425,6 @@ function App() {
         )}
       </section>
 
-      {/* Controls */}
       <section className="glass control-panel">
         <div className="control-label">
           <span>Coeficientes DCT (de 64)</span>
@@ -845,17 +451,21 @@ function App() {
         </button>
       </section>
 
-      {/* Results */}
       {result && (() => {
-        const q = psnrQualityLabel(result.psnr);
+        const psnrVal = result.psnr_inf ? Infinity : result.psnr;
+        const q = psnrQualityLabel(psnrVal);
+        const saved = (1 - result.size_comprimida / result.size_original) * 100;
+        const savingsColor = saved > 0 ? '#22D3EE' : '#f87171';
+        const savingsBg    = saved > 0 ? 'rgba(34,211,238,0.12)' : 'rgba(248,113,113,0.12)';
+        const savingsBorder= saved > 0 ? 'rgba(34,211,238,0.2)'  : 'rgba(248,113,113,0.2)';
+        const savingsText  = saved > 0 ? '−' + saved.toFixed(0) + '%' : '+' + Math.abs(saved).toFixed(0) + '%';
         return (
           <section className="glass results-panel">
             <p className="results-title">Resultados</p>
 
             <div className="thumbs-row">
               {THUMBS.map(({ key, src, label, filename }) => (
-                <div key={key} className="thumb-card"
-                  onClick={() => setModal({ src, label, filename })}>
+                <div key={key} className="thumb-card" onClick={() => setModal({ src, label, filename })}>
                   <img src={src} alt={label} />
                   <div className="thumb-label">{label}</div>
                   <div className="thumb-tap"><IconExpand /></div>
@@ -866,7 +476,7 @@ function App() {
             <div className="stats-row">
               <div className="psnr-block">
                 <div className="psnr-value">
-                  {isFinite(result.psnr) ? result.psnr.toFixed(2) : '∞'}
+                  {isFinite(psnrVal) ? psnrVal.toFixed(2) : '∞'}
                   <span className="psnr-unit"> dB</span>
                 </div>
                 <div className="psnr-label">PSNR</div>
@@ -875,20 +485,21 @@ function App() {
 
               <div className="metrics-grid">
                 <div className="metric">
-                  <div className="metric-val">{result.numCoef}<span style={{fontSize:'13px',opacity:.5}}>/64</span></div>
+                  <div className="metric-val">{result.num_coef}<span style={{fontSize:'13px',opacity:.5}}>/64</span></div>
                   <div className="metric-key">Coeficientes</div>
-                </div>
-                <div className="metric">
-                  <div className="metric-val">{(result.numCoef / 64 * 100).toFixed(0)}<span style={{fontSize:'13px',opacity:.5}}>%</span></div>
-                  <div className="metric-key">Ratio teórico</div>
                 </div>
                 <div className="metric">
                   <div className="metric-val" style={{fontSize:'15px'}}>{result.width}×{result.height}</div>
                   <div className="metric-key">Dimensiones (px)</div>
                 </div>
                 <div className="metric">
-                  <div className="metric-val" style={{fontSize:'15px'}}>{(result.width * result.height / 1000).toFixed(1)}<span style={{fontSize:'13px',opacity:.5}}>K</span></div>
-                  <div className="metric-key">Píxeles totales</div>
+                  <div className="metric-val" style={{fontSize:'16px'}}>{fmtBytes(result.size_original)}</div>
+                  <div className="metric-key">Tamaño original</div>
+                </div>
+                <div className="metric">
+                  <div className="metric-val" style={{fontSize:'16px'}}>{fmtBytes(result.size_comprimida)}</div>
+                  <div className="metric-key">Tamaño comprimido</div>
+                  <span className="size-savings" style={{color: savingsColor, background: savingsBg, borderColor: savingsBorder}}>{savingsText}</span>
                 </div>
               </div>
             </div>
@@ -896,7 +507,6 @@ function App() {
         );
       })()}
 
-      {/* Spinner */}
       {processing && (
         <div className="spinner-overlay">
           <div className="spinner-glass">
@@ -906,7 +516,6 @@ function App() {
         </div>
       )}
 
-      {/* Modal */}
       {modal && (
         <div className="modal-overlay" onClick={() => setModal(null)}>
           <div className="modal-inner" onClick={e => e.stopPropagation()}>
@@ -916,10 +525,8 @@ function App() {
             </div>
             <img className="modal-img" src={modal.src} alt={modal.label} />
             <div className="modal-footer">
-              <button className="btn-modal-download"
-                onClick={() => downloadDataURL(modal.src, modal.filename)}>
-                <IconDownload />
-                Descargar
+              <button className="btn-modal-download" onClick={() => downloadDataURL(modal.src, modal.filename)}>
+                <IconDownload />Descargar
               </button>
             </div>
           </div>

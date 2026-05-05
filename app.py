@@ -4,7 +4,7 @@ import math
 import os
 
 import numpy as np
-from flask import Flask, jsonify, render_template, request
+from flask import Flask, jsonify, render_template, request, send_from_directory
 from PIL import Image
 from scipy.fftpack import dct, idct
 
@@ -96,6 +96,11 @@ def _to_b64_png(arr: np.ndarray) -> str:
 @app.route("/")
 def index():
     return render_template("index.html")
+
+
+@app.route("/standalone")
+def standalone():
+    return send_from_directory(".", "DCT Image Compressor.html")
 
 
 @app.route("/process", methods=["POST"])

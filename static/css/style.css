@@ -196,28 +196,6 @@ input[type="range"]::-moz-range-thumb {
 .metric-val { font-size: 20px; font-weight: 700; }
 .metric-key { font-size: 11px; color: rgba(255,255,255,0.4); margin-top: 3px; }
 
-/* ── Size cards ── */
-.size-cards {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
-}
-.size-card {
-  padding: 16px;
-  border-radius: 14px;
-  background: rgba(255,255,255,0.05);
-  border: 1px solid rgba(255,255,255,0.08);
-  display: flex; flex-direction: column; gap: 6px;
-}
-.size-card-comp {
-  border-color: rgba(34,211,238,0.2);
-  background: rgba(34,211,238,0.06);
-}
-.size-card-label {
-  font-size: 11px; font-weight: 600; letter-spacing: 0.5px;
-  color: rgba(255,255,255,0.4); text-transform: uppercase;
-}
-.size-card-val {
-  font-size: 22px; font-weight: 700; color: #fff;
-}
 .size-savings {
   font-size: 12px; font-weight: 700;
   padding: 3px 8px; border-radius: 20px;
@@ -424,8 +402,6 @@ input[type="range"]::-moz-range-thumb {
   .metrics-grid { margin-bottom: 0; grid-template-columns: repeat(4, 1fr); }
   .metric { padding: 12px 14px; }
   .metric-val { font-size: 18px; }
-  .size-cards { grid-column: 1 / -1; }
-  .size-card-val { font-size: 18px; }
 
   /* Tighten left panels */
   .capture-btns { gap: 8px; }
